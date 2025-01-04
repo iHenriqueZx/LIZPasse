@@ -1,0 +1,9 @@
+name: LIZPasse
+version: '${project.version}'
+main: br.com.henriplugins.LIZPasse
+api-version: '1.19'
+author: LevImpZ
+commands:
+  passe:
+    description: Abre o painel do passe.
+    usage: /passe
