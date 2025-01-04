@@ -1,5 +1,5 @@
 name: LIZPasse
-version: '${project.version}'
+version: '1.0'
 main: br.com.henriplugins.LIZPasse
 api-version: '1.19'
 author: LevImpZ

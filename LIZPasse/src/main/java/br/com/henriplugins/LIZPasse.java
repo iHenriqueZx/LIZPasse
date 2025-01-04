@@ -1,23 +1,41 @@
 package br.com.henriplugins;
 
 import br.com.henriplugins.commands.PasseCommand;
-import org.bukkit.Bukkit;
+import br.com.henriplugins.events.PasseInventoryListener;
+import br.com.henriplugins.missions.MissionInventory;
+import br.com.henriplugins.missions.MissionManager;
+import br.com.henriplugins.rewards.RewardManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 public class LIZPasse extends JavaPlugin {
 
     private Connection connection;
+    private RewardManager rewardManager;
+    private MissionManager missionManager;
 
     @Override
     public void onEnable() {
+        missionManager = new MissionManager(this);
+        MissionInventory missionInventory = new MissionInventory(missionManager);
+        PasseInventoryListener passeListener = new PasseInventoryListener(missionInventory);
+        getServer().getPluginManager().registerEvents(passeListener, this);
         getCommand("passe").setExecutor(new PasseCommand());
 
         saveDefaultConfig();
         setupDatabase();
+
+        List<String> passNames = getConfig().getStringList("names");
+        if (passNames.isEmpty()) {
+            getLogger().warning("Nenhum nome de passe configurado. Usando padrões.");
+            passNames.add("free");
+            passNames.add("premium1");
+        }
+        rewardManager = new RewardManager(passNames);
     }
 
     @Override
@@ -60,5 +78,8 @@ public class LIZPasse extends JavaPlugin {
     }
     public Connection getConnection() {
         return connection;
+    }
+    public RewardManager getRewardManager() {
+        return rewardManager;
     }
 }
