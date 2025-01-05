@@ -7,6 +7,7 @@ import java.util.List;
 public class Mission {
 
     private final String id;
+    private final String name;
     private final MissionType type;
     private final int amount;
     private final Material material;
@@ -14,8 +15,9 @@ public class Mission {
     private final boolean repeatable;
     private final List<String> worlds;
 
-    public Mission(String id, MissionType type, int amount, Material material, int time, boolean repeatable, List<String> worlds) {
+    public Mission(String id, String name, MissionType type, int amount, Material material, int time, boolean repeatable, List<String> worlds) {
         this.id = id;
+        this.name = name;
         this.type = type;
         this.amount = amount;
         this.material = material;
@@ -26,6 +28,9 @@ public class Mission {
 
     public String getId() {
         return id;
+    }
+    public String getName() {
+        return name;
     }
 
     public MissionType getType() {

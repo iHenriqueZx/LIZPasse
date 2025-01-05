@@ -22,9 +22,11 @@ public class LIZPasse extends JavaPlugin {
     public void onEnable() {
         missionManager = new MissionManager(this);
         MissionInventory missionInventory = new MissionInventory(missionManager);
-        PasseInventoryListener passeListener = new PasseInventoryListener(missionInventory);
+        PasseInventoryListener passeListener = new PasseInventoryListener(missionInventory, missionManager);
         getServer().getPluginManager().registerEvents(passeListener, this);
+        getServer().getPluginManager().registerEvents(new PasseInventoryListener(missionInventory, missionManager), this);
         getCommand("passe").setExecutor(new PasseCommand());
+
 
         saveDefaultConfig();
         setupDatabase();

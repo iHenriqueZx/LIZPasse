@@ -1,8 +1,10 @@
 br\com\henriplugins\missions\MissionInventory.class
+br\com\henriplugins\missions\MissionManager$1.class
 br\com\henriplugins\missions\MissionManager.class
 br\com\henriplugins\commands\PasseCommand.class
 br\com\henriplugins\missions\MissionType.class
 br\com\henriplugins\LIZPasse.class
 br\com\henriplugins\missions\Mission.class
 br\com\henriplugins\events\PasseInventoryListener.class
+br\com\henriplugins\placeholders\PassePlaceholders.class
 br\com\henriplugins\rewards\RewardManager.class

@@ -8,6 +8,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+import java.util.Arrays;
+
 public class MissionInventory {
 
     private final MissionManager missionManager;
@@ -16,19 +19,24 @@ public class MissionInventory {
         this.missionManager = missionManager;
     }
 
-    public void openMissionInventory(Player player) {
-        Inventory missionInventory = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Missões");
+    public void openMissionInventory(Player player, List<Mission> missions) {
+        Inventory inventory = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN + "Missões");
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < missions.size() && i < 53; i++) {
+            Mission mission = missions.get(i);
+
             ItemStack missionItem = new ItemStack(Material.ENCHANTED_BOOK);
             ItemMeta meta = missionItem.getItemMeta();
             if (meta != null) {
-                meta.setDisplayName(ChatColor.GOLD + "Missão " + (i + 1));
+                meta.setDisplayName(ChatColor.GOLD + mission.getName());
+                meta.setLore(Arrays.asList(
+                        ChatColor.YELLOW + "Objetivo: " + missionManager.formatGoal(mission)
+                ));
                 missionItem.setItemMeta(meta);
             }
-            missionInventory.setItem(i, missionItem);
+            inventory.setItem(i, missionItem);
         }
 
-        player.openInventory(missionInventory);
+        player.openInventory(inventory);
     }
 }

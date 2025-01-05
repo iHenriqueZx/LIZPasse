@@ -14,6 +14,7 @@ names:
 # Max de missões: 53.
 missoes:
   andar:
+    name: "Explorador"
     # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
     type: TO_WALK
     # Quantos blocos ele vai andar?
@@ -24,6 +25,7 @@ missoes:
     worlds: []
      #- aventure
   quebrar:
+    name: "Destruidor"
     # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
     type: BREAK_BLOCK
     # Quantos blocos?
@@ -36,6 +38,7 @@ missoes:
     worlds: [ ]
     #- aventure
   colocar:
+    name: "Aspirante a construtor"
     # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
     type: PUT_BLOCK
     # Quantos blocos?
@@ -48,6 +51,7 @@ missoes:
     worlds: [ ]
     #- aventure
   matarmobs:
+    name: "Espero que seja apenas monstros"
     # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
     type: KILL_MOBS
     # Quantos mobs?
@@ -59,6 +63,7 @@ missoes:
     worlds: [ ]
     #- aventure
   matarplayers:
+    name: "O renomado assassino"
     # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
     type: KILL_PLAYER
     # Quantos jogadores?
@@ -69,6 +74,7 @@ missoes:
     worlds: [ ]
     #- aventure
   temponline:
+    name: "Uma máquina do tempo?"
     # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
     type: ONLINE_TIME
     # Quanto tempo em minutos?
