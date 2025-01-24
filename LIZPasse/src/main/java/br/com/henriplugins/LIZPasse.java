@@ -1,87 +1,58 @@
 package br.com.henriplugins;
 
-import br.com.henriplugins.commands.PasseCommand;
-import br.com.henriplugins.events.PasseInventoryListener;
-import br.com.henriplugins.missions.MissionInventory;
-import br.com.henriplugins.missions.MissionManager;
-import br.com.henriplugins.rewards.RewardManager;
+import br.com.henriplugins.listeners.PasseListener;
+import br.com.henriplugins.utils.BossBarManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import br.com.henriplugins.config.ConfigManager;
+import br.com.henriplugins.commands.PasseCommand;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.List;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
 
 public class LIZPasse extends JavaPlugin {
 
-    private Connection connection;
-    private RewardManager rewardManager;
-    private MissionManager missionManager;
+    private ConfigManager configManager;
 
     @Override
     public void onEnable() {
-        missionManager = new MissionManager(this);
-        MissionInventory missionInventory = new MissionInventory(missionManager);
-        PasseInventoryListener passeListener = new PasseInventoryListener(missionInventory, missionManager);
-        getServer().getPluginManager().registerEvents(passeListener, this);
-        getServer().getPluginManager().registerEvents(new PasseInventoryListener(missionInventory, missionManager), this);
-        getCommand("passe").setExecutor(new PasseCommand());
+        this.configManager = new ConfigManager(this);
+        this.configManager.loadConfig();
 
+        this.getCommand("passe").setExecutor(new PasseCommand(this));
+        getServer().getPluginManager().registerEvents(new PasseListener(this), this);
 
-        saveDefaultConfig();
-        setupDatabase();
-
-        List<String> passNames = getConfig().getStringList("names");
-        if (passNames.isEmpty()) {
-            getLogger().warning("Nenhum nome de passe configurado. Usando padrões.");
-            passNames.add("free");
-            passNames.add("premium1");
-        }
-        rewardManager = new RewardManager(passNames);
+        createRecompensasFile();
     }
-
-    @Override
-    public void onDisable() {
-        closeDatabase();
-    }
-
-    private void setupDatabase() {
-        boolean useMySQL = getConfig().getBoolean("MySQL", false);
-
-        try {
-            if (useMySQL) {
-                String host = getConfig().getString("mysql.host", "localhost");
-                String port = getConfig().getString("mysql.port", "3306");
-                String database = getConfig().getString("mysql.database", "minecraft");
-                String username = getConfig().getString("mysql.username", "root");
-                String password = getConfig().getString("mysql.password", "");
-                String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
-
-                connection = DriverManager.getConnection(url, username, password);
-                getLogger().info("Conectado ao banco de dados MySQL.");
-            } else {
-                String url = "jdbc:sqlite:" + getDataFolder() + "/data.db";
-                connection = DriverManager.getConnection(url);
-                getLogger().info("Conectado ao banco de dados SQLite.");
-            }
-        } catch (SQLException e) {
-            getLogger().severe("Erro ao conectar ao banco de dados: " + e.getMessage());
+    public void showMissionBossBarForPlayer(Player player, String missionDescription) {
+        if (player != null && player.isOnline()) {
+            BossBarManager.showBossBar(player, missionDescription);
         }
     }
-    private void closeDatabase() {
-        if (connection != null) {
-            try {
-                connection.close();
-                getLogger().info("Conexão com o banco de dados fechada.");
-            } catch (SQLException e) {
-                getLogger().severe("Erro ao fechar o banco de dados: " + e.getMessage());
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    private void createRecompensasFile() {
+        File recompensasFolder = new File(getDataFolder(), "Recompensas");
+        if (!recompensasFolder.exists()) {
+            recompensasFolder.mkdirs();
+        }
+
+        File recompensasFile = new File(recompensasFolder, "recompensas.yml");
+        if (!recompensasFile.exists()) {
+            try (InputStream in = getResource("Recompensas/recompensas.yml")) {
+                if (in != null) {
+                    Files.copy(in, recompensasFile.toPath());
+                    getLogger().info("Arquivo recompensas.yml criado com sucesso.");
+                } else {
+                    getLogger().warning("Não foi possível encontrar o arquivo padrão recompensas.yml nos resources.");
+                }
+            } catch (Exception e) {
+                getLogger().severe("Erro ao criar recompensas.yml: " + e.getMessage());
             }
         }
-    }
-    public Connection getConnection() {
-        return connection;
-    }
-    public RewardManager getRewardManager() {
-        return rewardManager;
     }
 }

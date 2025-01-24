@@ -1,0 +1,9 @@
+Recompensas:
+  recompensa1:
+    comando: give %player% minecraft:diamond 1
+    descricao: 'Receba 1 diamante!'
+    icone: DIAMOND
+  recompensa2:
+    comando: eco give %player% 500
+    descricao: 'Ganhe 500 moedas!'
+    icone: GOLD_INGOT

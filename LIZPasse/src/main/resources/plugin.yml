@@ -2,10 +2,7 @@ name: LIZPasse
 version: '${project.version}'
 main: br.com.henriplugins.LIZPasse
 api-version: '1.19'
-author: LevImpZ
-depend:
-  - PlaceholderAPI
 commands:
   passe:
-    description: Abre o painel do passe.
-    usage: /passe
+    description: "Comando principal do passe"
+    usage: "/passe"

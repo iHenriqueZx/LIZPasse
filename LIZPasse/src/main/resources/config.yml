@@ -1,83 +1,58 @@
-# Use 'true' para MySQL e 'false' para SQLite.
-MySQL: false
+# Configuração do plugin
+MySQL: false  # Use 'true' para MySQL e 'false' para SQLite
+# Configuração do banco de dados para MySQL
 mysql:
   host: "localhost"
   port: "3306"
   database: "minecraft"
   username: "root"
   password: ""
-# Configuração de passes, quantos terão? Max: 5.
-permissionsCount: 2
-names:
-  - gratuito
-  - premium
-# Max de missões: 53.
-missoes:
-  andar:
-    name: "Explorador"
-    # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
-    type: TO_WALK
-    # Quantos blocos ele vai andar?
-    distance: 250
-    # Vão pode refazer a missão?
-    repeat: false
-    # Deixe '[]' para qualquer mundo
-    worlds: []
-     #- aventure
-  quebrar:
+# Configuração do banco de dados para SQLite
+sqlite:
+  file: "plugins/LIZPasse/db.sqlite"  # Caminho para o arquivo SQLite
+# Outras configurações do plugin (por exemplo, configurações de passes, missões, etc.)
+passe:
+  info_lore:
+    - "§7Você tem o passe §6#1"
+    - "§7Complete missões para obter recompensas!"
+    - "§7Para obter outro passe, fale com o NPC."
+# Configuração de cooldowns para missões
+cooldowns:
+  default: "1d"  # Cooldown padrão de 1 dia
+missions:
+  mission_1:
+    name: "Caçador de Mobs"
+    description: "Mate 10 mobs de qualquer tipo"
+    type: "kill_mobs"
+    target: 10
+    cooldown: "1d"  # 1 dia de cooldown entre a conclusão da missão
+  mission_2:
     name: "Destruidor"
-    # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
-    type: BREAK_BLOCK
-    # Quantos blocos?
-    amount: 300
-    # Qual bloco?
-    material: OAK_LOG
-    # Vão pode refazer a missão?
-    repeat: false
-    # Deixe '[]' para qualquer mundo
-    worlds: [ ]
-    #- aventure
-  colocar:
-    name: "Aspirante a construtor"
-    # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
-    type: PUT_BLOCK
-    # Quantos blocos?
-    amount: 200
-    # Qual bloco?
-    material: GRASS_BLOCK
-    # Vão pode refazer a missão?
-    repeat: false
-    # Deixe '[]' para qualquer mundo
-    worlds: [ ]
-    #- aventure
-  matarmobs:
-    name: "Espero que seja apenas monstros"
-    # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
-    type: KILL_MOBS
-    # Quantos mobs?
-    amount: 200
-    mob: ZOMBIE
-    # Vão pode refazer a missão?
-    repeat: false
-    # Deixe '[]' para qualquer mundo
-    worlds: [ ]
-    #- aventure
-  matarplayers:
-    name: "O renomado assassino"
-    # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
-    type: KILL_PLAYER
-    # Quantos jogadores?
-    amount: 20
-    # Vão pode refazer a missão?
-    repeat: false
-    # Deixe '[]' para qualquer mundo
-    worlds: [ ]
-    #- aventure
-  temponline:
-    name: "Uma máquina do tempo?"
-    # Use: TO_WALK, BREAK_BLOCK, PUT_BLOCK, KILL_MOBS, KILL_PLAYER ou ONLINE_TIME.
-    type: ONLINE_TIME
-    # Quanto tempo em minutos?
-    time: 300
-    # Vão pode refazer a missão?
-    repeat: false
+    description: "Quebre 20 blocos"
+    type: "break_blocks"
+    target: 20
+    cooldown: "1d"
+  mission_3:
+    name: "Construtor"
+    description: "Coloque 10 blocos de pedra"
+    type: "place_blocks"
+    target: 10
+    cooldown: "1d"
+  mission_4:
+    name: "Corredor"
+    description: "Ande 500 blocos"
+    type: "move"
+    target: 500
+    cooldown: "1d"
+  mission_5:
+    name: "Mensageiro"
+    description: "Envie 10 mensagens no chat"
+    type: "send_messages"
+    target: 10
+    cooldown: "1d"
+  mission_6:
+    name: "PvP Master"
+    description: "Mate 5 jogadores"
+    type: "kill_players"
+    target: 5
+    cooldown: "1d"
